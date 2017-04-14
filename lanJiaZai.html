@@ -1,0 +1,73 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>懒加载</title>
+		<meta content = "initial-scale=1.0 user-scalable=no,maximum-scale=1,width=device-width" name="viewport" />
+		<style type="text/css">
+			*{margin:0;padding:0;}
+			div{width:200px;height:300px;background:url() no-repeat left top;background-size:100% 100%; margin: 10px 0;}
+			img{display:block; width: 200px; height:300px;}
+		</style>
+	</head>
+	<body>
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<div data-src="./picBig.jpg"></div>
+		<img src="" data-src="./yemian.jpg">
+		<script>
+		(function(w){
+			//document.documentElement
+			var oDcu = document.querySelector('document');
+			//window.innerHeight;
+			document.addEventListener('scroll',function(){
+				_alazyload();
+			},false);
+			//懒加载封装
+			function _alazyload(){
+				var aImg = document.querySelectorAll('[data-src]');//获取带有data-src属性的标签
+				Array.prototype.forEach.call(aImg, function(v, i){
+					var box = v.getBoundingClientRect();//获取标签其所在位置 				
+					if((box.top > 0 || box.bottom >0) && box.top < window.innerHeight){
+						if( v.nodeName.toLowerCase() == 'img' ){//判断是否为img标签
+							var url = v.getAttribute('data-src');
+							v.setAttribute('src',url);
+						}else{
+							var url = v.getAttribute('data-src');
+							v.style.backgroundImage = 'url('+url+')';
+						}
+						
+					}
+				});
+			};
+			//打开页面执行一次
+			_alazyload();
+			
+		})(window)
+			//var oImg = document.querySelector('img');
+			//var aDiv = document.querySelectorAll('div');
+			//oImg.setAttribute('src',url);
+			//console.log(aDiv[6])
+			//for(var i=0; i<aDiv.length; i++){
+				//this.index = 2; 
+				//var url = aDiv[i].getAttribute('data-src');
+				//aDiv[i].style.backgroundImage = 'url('+url+')';
+				//console.log(i)
+			//}
+		</script>
+	</body>
+</html>
